@@ -21,6 +21,10 @@ Row numbers increase toward the top of the image."""
 # Can input the exact object names the VLM should use or set to [] to let the VLM name objects itself.
 objects = ["red cup", "orange cup", "yellow cup", "green cup", "blue cup", "purple cup"]
 
+# ---- Cup geometry -------------------------------------------------------------
+cup_spacing_mm = 90.0 # center-to-center distance btw cups in a row
+stack_height_mm = 110.0 # height gained per stack level (cup height when stacked)
+
 # ---- Grid placement in the robot's frame -------------------------------------
 # Where the outer corner of cell (0,0) is, in the robot's coordinates (mm),
 # and how far the grid's x axis is rotated from the robot's x axis (degrees).
