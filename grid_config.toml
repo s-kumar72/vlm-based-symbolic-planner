@@ -1,0 +1,31 @@
+# Grid config for scene_to_goal.py
+#
+# Edit file to match the built grid w/ Kinova arm.
+# Origin cell should be (row 0, col 0) with x along columns and y along rows.
+
+# ---- Grid size ---------------------------------------------------------------
+rows = 3
+cols = 4
+cell_width_mm = 100.0    # size of one cell along the columns (x)
+cell_height_mm = 100.0   # size of one cell along the rows (y)
+
+# ---- How the grid looks in the photo -----------------------------------------
+# (This info is pasted straight into the VLM prompt so should be specific). 
+origin_marker = "a black X taped inside the cell"
+axis_hint = """\
+The origin cell is in the bottom-left corner of the image. \
+Column numbers increase to the right. \
+Row numbers increase toward the top of the image."""
+
+# ---- Objects -----------------------------------------------------------------
+# Can input the exact object names the VLM should use or set to [] to let the VLM name objects itself.
+objects = ["red cup", "orange cup", "yellow cup", "green cup", "blue cup", "purple cup"]
+
+# ---- Grid placement in the robot's frame -------------------------------------
+# Where the outer corner of cell (0,0) is, in the robot's coordinates (mm),
+# and how far the grid's x axis is rotated from the robot's x axis (degrees).
+grid_origin_in_robot_mm = [0.0, 0.0]
+grid_rotation_deg = 0.0
+
+# ---- Model -------------------------------------------------------------------
+model_id = "gemini-robotics-er-2-preview"
