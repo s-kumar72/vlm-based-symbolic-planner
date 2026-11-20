@@ -5,7 +5,9 @@ All components that interact with VLM.
     read_shape(vlm, cfg, photo)  -> {"on": {name: [...]}, "base_order": [...]}
 """
 import json
+import re
 import sys
+import time
 from io import BytesIO
 from pathlib import Path
 
@@ -31,7 +33,8 @@ DEFAULTS = {
     "objects": {"kind": "object", "names": []},
     "stacking": {"spacing_mm": 0.0, "level_height_mm": 0.0, "max_supports": 2},
     "robot": {"grid_origin_mm": [0.0, 0.0], "grid_rotation_deg": 0.0},
-    "model": {"model_id": "gemini-robotics-er-2-preview", "api_version": "v1beta",
+    "model": {"model_id": "gemini-robotics-er-2-preview", "api_version": "v1beta", 
+              "requests_per_minute": 0, "rate_limit_retries": 5,
               "votes": 2, "max_attempts": 5, "max_image_px": 1600},
 }
 REQUIRED = {"grid": ("rows", "cols", "cell_width_mm", "cell_height_mm", "axis_hint")}
@@ -155,28 +158,58 @@ def shape_prompt(cfg: dict) -> tuple[str, str]:
 class GeminiVLM:
     # GEMINI ROBOTICS-ER 2
 
-    def __init__(self, model_id: str, api_version: str = "v1beta"):
+    def __init__(self, model_id: str, api_version: str = "v1beta",
+                 requests_per_minute: float = 0, rate_limit_retries: int = 5):
         from google import genai
         self.client = genai.Client(http_options={"api_version": api_version})
         self.model_id = model_id
+        self.min_interval = 60.0 / requests_per_minute if requests_per_minute else 0.0
+        self.rate_limit_retries = rate_limit_retries
+        self._last_call = None
+
+    def _wait_for_slot(self):
+        if self._last_call is not None and self.min_interval:
+            wait = self._last_call + self.min_interval - time.monotonic()
+            if wait > 0:
+                print(f"  (waiting {wait:.0f}s to stay under the rate limit)", file=sys.stderr)
+                time.sleep(wait)
+        self._last_call = time.monotonic()
 
     def generate_json(self, system: str, images: list[bytes], text: str, schema) -> dict:
-        from google.genai import types
+        from google.genai import errors, types
         parts = [types.Part.from_bytes(data=b, mime_type="image/jpeg") for b in images]
-        resp = self.client.models.generate_content(
-            model=self.model_id,
-            contents=[*parts, text],
-            config=types.GenerateContentConfig(
-                system_instruction=system,
-                response_mime_type="application/json",
-                response_schema=schema,
-            ),
-        )
-        return json.loads(resp.text)
+        for retry in range(self.rate_limit_retries + 1):
+            self._wait_for_slot()
+            try:
+                resp = self.client.models.generate_content(
+                    model=self.model_id,
+                    contents=[*parts, text],
+                    config=types.GenerateContentConfig(
+                        system_instruction=system,
+                        response_mime_type="application/json",
+                        response_schema=schema,
+                    ),
+                )
+                return json.loads(resp.text)
+            except errors.ClientError as e:
+                if e.code != 429 or retry == self.rate_limit_retries:
+                    raise
+                if "PerDay" in str(e):
+                    raise RuntimeError("Daily free-tier quota used up for this model; "
+                                       "try again tomorrow or enable billing.") from e
+                delay = _retry_delay_seconds(e)
+                print(f"  (rate limited; retrying in {delay:.0f}s)", file=sys.stderr)
+                time.sleep(delay)
+
+
+def _retry_delay_seconds(err, default: float = 30.0) -> float:
+    match = re.search(r"retry in ([\d.]+)s", str(err))
+    return (float(match.group(1)) if match else default) + 1.0
 
 
 def make_vlm(cfg: dict) -> GeminiVLM:
-    return GeminiVLM(cfg["model"]["model_id"], cfg["model"]["api_version"])
+    m = cfg["model"]
+    return GeminiVLM(m["model_id"], m["api_version"], m["requests_per_minute"], m["rate_limit_retries"])
 
 
 # READ SINGLE PHOTO

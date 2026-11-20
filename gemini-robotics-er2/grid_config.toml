@@ -56,3 +56,5 @@ api_version = "v1beta"
 votes = 2                   # matching valid answers needed before accepting a reading
 max_attempts = 5            # give up after this many calls per image
 max_image_px = 1600         # photos are shrunk to this longest side before sending
+requests_per_minute = 5     # free tier limit
+rate_limit_retries = 5      # retry this many times before giving up
