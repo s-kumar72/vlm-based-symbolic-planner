@@ -220,7 +220,6 @@ class PerceptionError(RuntimeError):
 
 def ask_until_agree(vlm, cfg: dict, system: str, user: str, image: bytes,
                     schema, parse, label: str):
-    """Ask until `votes` valid answers match, so one misread can't slip through."""
     votes, max_attempts = cfg["model"]["votes"], cfg["model"]["max_attempts"]
     counts: dict[str, int] = {}
     for attempt in range(1, max_attempts + 1):
