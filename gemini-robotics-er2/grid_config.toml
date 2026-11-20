@@ -1,0 +1,60 @@
+# Config for scene_to_goal.py and test_vlm.py
+
+# GRID STRUCTURE:
+#       Cell (row 0, col 0) is the origin cell; x -> rows, y-> cols (grid positions are computed via Python parser, not VLM)
+
+# ---- Task --------------------------------------------------------------------
+[task]
+# "2d": objects move between grid cells (goal photo is the same grid rearranged)
+# "3d": goal photo shows a 3d shape & only the shape matters for the goal position
+
+mode = "2d"
+
+# ---- Grid --------------------------------------------------------------------
+[grid]
+rows = 3
+cols = 3
+
+cell_width_mm = 72.0     # cell pitch along the columns (x)
+cell_height_mm = 93.0    # cell pitch along the rows (y)
+
+# How many objects may sit on the table in one cell (0 = no limit)
+max_objects_per_cell = 0
+
+# THIS INFO IS PUT INTO VLM PROMPT (origin marker can be empty if origin isn't physically marked)
+origin_marker = ""
+axis_hint = """\
+Cell (row 0, col 0) is the bottom-left cell of the grid in the image. \
+Column numbers increase to the right. \
+Row numbers increase toward the top of the image."""
+
+# ---- Objects -----------------------------------------------------------------
+[objects]
+kind = "token"   # word used in the prompt: "token", "cup", ...
+
+# Exact names the VLM must use (empty list lets VLM name objects itself)
+names = ["pink token", "orange token", "lime green token",
+         "brown token", "yellow token", "purple token"]
+
+# ---- Stacking (3d mode only) -------------------------------------------------
+[stacking]
+spacing_mm = 90.0        # center-to-center distance between neighbors in a row
+level_height_mm = 110.0  # height gained per stack level
+max_supports = 2         # an object can rest on at most this many objects
+
+# ---- Grid placement in the robot's frame -------------------------------------
+[robot]
+# Outer corner of cell (0,0) in robot coordinates (mm), and how far the grid's
+# x axis is rotated from the robot's x axis (degrees).
+grid_origin_mm = [0.0, 0.0]     # outer corner of cell (0, 0) in robot coordinates (mm)
+grid_rotation_deg = 0.0         # how far grid's x axis is rotated from robot's x axis (deg)
+
+# ---- Model -------------------------------------------------------------------
+[model]
+model_id = "gemini-robotics-er-2-preview"
+api_version = "v1beta"
+votes = 2                   # matching valid answers needed before accepting a reading
+max_attempts = 5            # give up after this many calls per image
+max_image_px = 1600         # photos are shrunk to this longest side before sending
+requests_per_minute = 5     # free tier limit
+rate_limit_retries = 5      # retry this many times before giving up
