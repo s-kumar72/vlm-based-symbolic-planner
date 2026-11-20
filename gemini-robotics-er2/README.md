@@ -44,9 +44,9 @@ python scene_to_goal.py --show-prompt
 
 ---
 
-## The grid method
+## Grid
 
-Instead of hardcoding where each object starts, we put the objects on a grid with known measurements and let the model tell say which cell each one is in.
+Instead of hardcoding where each object starts, we put the objects on a grid with known measurements and let the model say which cell each object is in.
 
 The test grid (used in test_images.py) is a sheet of letter paper split into a 3 × 3 grid with blue tape. Cells are counted from the photo's point of view:
 
@@ -108,8 +108,8 @@ Example output (cut down to two tokens):
 
 ### 3D (stacking)
 
-- The current photo still shows the grid. The difference is that a token can be lying on top of another one, and the model says what it's resting on.
-- The goal photo shows the shape we want to build. When the model creates the goal state, only the shape matters (not where it is on the grid). The model will output what each object is resting on plus the L-R order of the bototm row. 
+- The current photo (initial state) shows the grid with tokens & one token can be resting on top of another token. 
+- The goal photo shows the shape we want to build. When the model creates the goal state, only the shape matters (not where it is on the grid). The model will output what each object is resting on plus the L-R order of the bottom row. 
 - Extra settings in the `[stacking]` section can be changed in the toml file: `spacing_mm` (distance between neighboring cups in a row) and `level_height_mm` (how much height each level adds). (Just added some values for right now but will need to be remeasured).
 
 So far 3D has only been tried with the flat test photos. Photo D has a purple token overlapping the pink one to replicate "stacking" but testing should still be done with the actual cups (or whatever object we'll stack).
