@@ -176,7 +176,7 @@ class GeminiVLM:
 
 
 def make_vlm(cfg: dict) -> GeminiVLM:
-    return GeminiVLM(cfg["model"]["model_id"]["api_version"])
+    return GeminiVLM(cfg["model"]["model_id"], cfg["model"]["api_version"])
 
 
 # READ SINGLE PHOTO
