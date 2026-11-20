@@ -31,7 +31,7 @@ DEFAULTS = {
     "objects": {"kind": "object", "names": []},
     "stacking": {"spacing_mm": 0.0, "level_height_mm": 0.0, "max_supports": 2},
     "robot": {"grid_origin_mm": [0.0, 0.0], "grid_rotation_deg": 0.0},
-    "model": {"model_id": "gemini-robotics-er-2-preview",
+    "model": {"model_id": "gemini-robotics-er-2-preview", "api_version": "v1beta",
               "votes": 2, "max_attempts": 5, "max_image_px": 1600},
 }
 REQUIRED = {"grid": ("rows", "cols", "cell_width_mm", "cell_height_mm", "axis_hint")}
@@ -155,9 +155,9 @@ def shape_prompt(cfg: dict) -> tuple[str, str]:
 class GeminiVLM:
     # GEMINI ROBOTICS-ER 2
 
-    def __init__(self, model_id: str):
+    def __init__(self, model_id: str, api_version: str = "v1beta"):
         from google import genai
-        self.client = genai.Client()
+        self.client = genai.Client(http_options={"api_version": api_version})
         self.model_id = model_id
 
     def generate_json(self, system: str, images: list[bytes], text: str, schema) -> dict:
@@ -176,7 +176,7 @@ class GeminiVLM:
 
 
 def make_vlm(cfg: dict) -> GeminiVLM:
-    return GeminiVLM(cfg["model"]["model_id"])
+    return GeminiVLM(cfg["model"]["model_id"]["api_version"])
 
 
 # READ SINGLE PHOTO

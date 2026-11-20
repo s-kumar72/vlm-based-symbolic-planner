@@ -7,6 +7,7 @@
 [task]
 # "2d": objects move between grid cells (goal photo is the same grid rearranged)
 # "3d": goal photo shows a 3d shape & only the shape matters for the goal position
+
 mode = "2d"
 
 # ---- Grid --------------------------------------------------------------------
@@ -51,6 +52,7 @@ grid_rotation_deg = 0.0         # how far grid's x axis is rotated from robot's 
 # ---- Model -------------------------------------------------------------------
 [model]
 model_id = "gemini-robotics-er-2-preview"
+api_version = "v1beta"
 votes = 2                   # matching valid answers needed before accepting a reading
 max_attempts = 5            # give up after this many calls per image
 max_image_px = 1600         # photos are shrunk to this longest side before sending
