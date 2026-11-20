@@ -1,0 +1,93 @@
+# Hand labels for the test photos to double check. 
+# [X.on] lists tokens lying on top of other tokens (only checked in 3d mode).
+
+[A]
+file = "2d_grid_test_A.JPG"
+[A.cells]
+"pink token" = [2, 1]
+"orange token" = [2, 2]
+"lime green token" = [1, 1]
+"brown token" = [1, 2]
+"yellow token" = [0, 1]
+"purple token" = [0, 2]
+
+[B]
+file = "2d_grid_test_B.JPG"
+[B.cells]
+"brown token" = [2, 0]
+"pink token" = [2, 1]
+"orange token" = [2, 2]
+"lime green token" = [1, 1]
+"purple token" = [0, 1]
+"yellow token" = [0, 1]
+
+[C]
+file = "2d_grid_test_C.JPG"
+[C.cells]
+"brown token" = [2, 0]
+"orange token" = [2, 2]
+"pink token" = [1, 1]
+"yellow token" = [0, 0]
+"purple token" = [0, 1]
+"lime green token" = [0, 2]
+
+[D]
+file = "2d_grid_test_D.JPG"
+[D.cells]
+"orange token" = [2, 2]
+"brown token" = [1, 1]
+"pink token" = [1, 1]
+"purple token" = [1, 1]
+"yellow token" = [0, 0]
+"lime green token" = [0, 2]
+[D.on]
+"purple token" = ["pink token"]   # purple overlaps pink
+
+[E]
+file = "2d_grid_test_E.JPG"   # no purple token in this photo
+[E.cells]
+"orange token" = [2, 1]
+"lime green token" = [1, 0]
+"brown token" = [1, 1]
+"pink token" = [1, 1]
+"yellow token" = [0, 0]
+
+[F]
+file = "2d_grid_test_F.JPG"
+[F.cells]
+"lime green token" = [2, 0]
+"orange token" = [2, 1]
+"brown token" = [2, 2]
+"pink token" = [1, 1]
+"yellow token" = [0, 0]
+"purple token" = [0, 2]
+
+[G]
+file = "2d_grid_test_G.JPG"
+[G.cells]
+"lime green token" = [2, 0]
+"orange token" = [2, 1]
+"brown token" = [2, 2]
+"yellow token" = [0, 0]
+"pink token" = [0, 1]
+"purple token" = [0, 2]
+
+[H]
+file = "2d_grid_test_H.JPG"
+[H.cells]
+"lime green token" = [2, 0]
+"brown token" = [2, 2]
+"pink token" = [1, 0]
+"orange token" = [1, 2]
+"yellow token" = [0, 0]
+"purple token" = [0, 2]
+
+[I]
+file = "2d_grid_test_I.JPG"
+[I.cells]
+"lime green token" = [2, 2]
+"pink token" = [1, 0]
+"brown token" = [1, 1]
+"orange token" = [1, 1]
+"purple token" = [1, 1]
+"yellow token" = [0, 0]
