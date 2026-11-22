@@ -32,12 +32,13 @@ yaw_deg = -90.0                   # fingers close along the rows
 gripper_open = 0.4                # 0 = fully open (185 mm, hits neighbours)
 gripper_closed = 0.85
 
+# Also used by franka_real.py on the real robot: measure these for the real table.
 [franka]
 grid_origin_mm = [360.5, 108.0]
 grid_rotation_deg = -90.0
 buffers_mm = [[500.0, -170.0]]
 table_top_mm = 0.0                # cubes sit on the ground, as in Lab 3
-grasp_height_mm = 20.0            # tool point at the cube's centre, as in Lab 3
+grasp_height_mm = 20.0            # tool point at the block's centre (half the block size)
 yaw_deg = 0.0                     # fingers close along the rows
 gripper_open = 0.04
 gripper_closed = 0.0125
