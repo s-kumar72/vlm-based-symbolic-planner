@@ -28,10 +28,10 @@ class MoveFailed(RuntimeError):
 
 # ================================================================ config + positions
 
-def load_config(robot: str, path=HERE / "sim_config.toml") -> dict:
+def load_config(robot: str, path=HERE / "sim_config.toml", grid_config=None) -> dict:
     with open(path, "rb") as f:
         cfg = tomllib.load(f)
-    with open((Path(path).parent / cfg["grid_config"]).resolve(), "rb") as f:
+    with open(grid_config or (Path(path).parent / cfg["grid_config"]).resolve(), "rb") as f:
         cfg["grid"] = tomllib.load(f)["grid"]
     cfg["robot"] = cfg[robot]
     return cfg
@@ -109,7 +109,7 @@ def build_scene(cfg, robot, placement, name="grid_scene.xml") -> Path:
 
     xml = f"""<mujoco model="{robot['name']} grid scene">
   <include file="{robot['include']}"/>
-  <option timestep="0.002"/>
+  <option timestep="0.002" cone="elliptic" impratio="10"/>
   <visual><headlight diffuse="0.3 0.3 0.3" ambient="0.3 0.3 0.3" specular="0 0 0"/><global offwidth="1280" offheight="960"/></visual>
   <worldbody>
     {chr(10).join('    ' + s for s in world).lstrip()}
