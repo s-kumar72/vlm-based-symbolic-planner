@@ -1,0 +1,43 @@
+# Grid size comes from ../gemini-robotics-er2/grid_config.toml.
+grid_config = "../gemini-robotics-er2/grid_config.toml"
+
+[cubes]
+size_mm = 40.0
+mass_kg = 0.05
+friction = 1.5
+
+[cubes.colors]
+"pink token" = [0.95, 0.45, 0.60, 1.0]
+"orange token" = [1.00, 0.35, 0.05, 1.0]
+"lime green token" = [0.70, 0.90, 0.10, 1.0]
+"brown token" = [0.50, 0.35, 0.28, 1.0]
+"yellow token" = [1.00, 0.80, 0.05, 1.0]
+"purple token" = [0.35, 0.15, 0.60, 1.0]
+
+[motion]
+transit_height_mm = 140.0   # tool height above the table between spots
+place_drop_mm = 3.0         # let go this far above the grasp height
+step_mm = 10.0              # tool travel per control step (10 Hz)
+close_steps = 8             # control steps to wait for the gripper
+place_tolerance_mm = 15.0   # how far from a spot's centre still counts as placed
+
+# Row 0 nearest the robot, col 0 on the robot's left (matches the photos).
+[kinova]
+grid_origin_mm = [220.0, 108.0]   # outer corner of cell (0,0)
+grid_rotation_deg = -90.0
+buffers_mm = [[359.5, -170.0]]    # spare spots beside the grid
+table_top_mm = 20.0
+grasp_height_mm = 40.0            # fingertips reach ~33 mm below the tool point
+yaw_deg = -90.0                   # fingers close along the rows
+gripper_open = 0.4                # 0 = fully open (185 mm, hits neighbours)
+gripper_closed = 0.85
+
+[franka]
+grid_origin_mm = [360.5, 108.0]
+grid_rotation_deg = -90.0
+buffers_mm = [[500.0, -170.0]]
+table_top_mm = 0.0                # cubes sit on the ground, as in Lab 3
+grasp_height_mm = 20.0            # tool point at the cube's centre, as in Lab 3
+yaw_deg = 0.0                     # fingers close along the rows
+gripper_open = 0.04
+gripper_closed = 0.0125

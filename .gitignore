@@ -11,3 +11,6 @@ env/
 
 .vscode/
 .idea/
+
+sim/assets/*/grid_scene.xml
+sim/assets/*/_snapshot.xml

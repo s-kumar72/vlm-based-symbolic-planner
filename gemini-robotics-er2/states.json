@@ -1,0 +1,134 @@
+{
+  "mode": "2d",
+  "current": {
+    "brown token": {
+      "cell": [
+        1,
+        2
+      ],
+      "xy_mm": [
+        180.0,
+        139.5
+      ]
+    },
+    "lime green token": {
+      "cell": [
+        1,
+        1
+      ],
+      "xy_mm": [
+        108.0,
+        139.5
+      ]
+    },
+    "orange token": {
+      "cell": [
+        2,
+        2
+      ],
+      "xy_mm": [
+        180.0,
+        232.5
+      ]
+    },
+    "pink token": {
+      "cell": [
+        2,
+        1
+      ],
+      "xy_mm": [
+        108.0,
+        232.5
+      ]
+    },
+    "purple token": {
+      "cell": [
+        0,
+        2
+      ],
+      "xy_mm": [
+        180.0,
+        46.5
+      ]
+    },
+    "yellow token": {
+      "cell": [
+        0,
+        1
+      ],
+      "xy_mm": [
+        108.0,
+        46.5
+      ]
+    }
+  },
+  "goal": {
+    "brown token": {
+      "cell": [
+        2,
+        0
+      ],
+      "xy_mm": [
+        36.0,
+        232.5
+      ]
+    },
+    "lime green token": {
+      "cell": [
+        0,
+        2
+      ],
+      "xy_mm": [
+        180.0,
+        46.5
+      ]
+    },
+    "orange token": {
+      "cell": [
+        2,
+        2
+      ],
+      "xy_mm": [
+        180.0,
+        232.5
+      ]
+    },
+    "pink token": {
+      "cell": [
+        1,
+        1
+      ],
+      "xy_mm": [
+        108.0,
+        139.5
+      ]
+    },
+    "purple token": {
+      "cell": [
+        0,
+        1
+      ],
+      "xy_mm": [
+        108.0,
+        46.5
+      ]
+    },
+    "yellow token": {
+      "cell": [
+        0,
+        0
+      ],
+      "xy_mm": [
+        36.0,
+        46.5
+      ]
+    }
+  },
+  "changed": [
+    "brown token",
+    "lime green token",
+    "pink token",
+    "purple token",
+    "yellow token"
+  ]
+}
